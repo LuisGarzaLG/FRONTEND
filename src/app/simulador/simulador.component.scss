@@ -1,0 +1,225 @@
+/* TITULOS DESTACADOS */
+.sim-header {
+  font-size: 42px;
+  font-weight: 800;
+  color: #0048ff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: fadeInDown 0.6s ease;
+  letter-spacing: 1px;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* GRILLAS FLEXIBLES */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-bottom: 1rem;
+}
+.col-md-4, .col-md-6, .col-chart {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .col-md-4 { width: 33.333%; }
+  .col-md-6, .col-chart { width: 49%; }
+}
+
+/* INPUTS LLAMATIVOS */
+input[nbInput] {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+input[nbInput]:focus {
+  box-shadow: 0 0 0 3px #3366ff40;
+  transform: scale(1.02);
+  border-color: #3366ff;
+}
+
+/* BOTÓN MODERNO */
+button[nbButton] {
+  padding: 0.7rem 1.6rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #3366ff, #003cb3);
+  color: #fff;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background 0.3s ease;
+  border: none;
+}
+button[nbButton]:hover {
+  background: #002b80;
+  transform: translateY(-2px);
+}
+
+/* TARJETAS (nb-card) CON EFECTO */
+nb-card {
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  animation: scaleIn 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+/* TABLA MODERNA */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.table th, .table td {
+  padding: 0.6rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.table thead {
+  background: linear-gradient(to right, #e3f2fd, #cbe1ff);
+  color: #003366;
+}
+.table tr:hover {
+  background-color: #f0f8ff;
+}
+
+/* COLA DE IMPRESIÓN */
+.cola-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+  padding: 10px;
+}
+.evento-cola {
+  background: #e6f0ff;
+  border-left: 5px solid #3366ff;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  color: #1a2a4e;
+  box-shadow: 0 2px 6px rgba(51, 102, 255, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.evento-cola:hover {
+  transform: translateY(-4px);
+  background-color: #d6e6ff;
+  box-shadow: 0 4px 10px rgba(51, 102, 255, 0.2);
+}
+
+/* PROGRESO */
+nb-progress-bar {
+  height: 0.7rem;
+  border-radius: 5px;
+  margin-bottom: 0.4rem;
+}
+
+/* CABECERA DE TARJETAS */
+nb-card-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #003366;
+  background: #eef3ff;
+  border-bottom: 1px solid #d3e3ff;
+  padding: 0.75rem 1.2rem;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+/* FOOTER */
+nb-layout-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  background: #eaf0ff;
+  padding: 0.6rem;
+  color: #555;
+}
+
+/* INPUTS Y BOTONES ORGANIZADOS */
+.sim-flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.sim-input-group {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+}
+.sim-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* GRAFICOS */
+.col-chart ngx-charts-bar-vertical {
+  display: block;
+  height: 400px;
+  width: 100%;
+}
+
+/* INFO DE IMPACTO */
+.impacto-texto {
+  background: #f4faff;
+  padding: 1rem;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: #002f5f;
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 5px #dbe9ff;
+}
+
+/* M/M/c */
+.modelo-mm {
+  background: #f4f8ff;
+  padding: 0.75rem 1.2rem;
+  border-left: 5px solid #0073ff;
+  border-radius: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 0.94rem;
+  color: #1e2d50;
+}
+.sim-card{
+  padding: 10px;
+}
+
+  .sim-card-1 {
+  padding: 0 !important;
+  overflow: hidden;         
+  border-radius: 0.5rem;   
+  box-sizing: border-box;   
+  }
+
+  .sim-card-body {
+  padding: 0 !important;  /* Más pequeño, pero sin pegarse a los bordes */
+}
+
+
+.col-chart ngx-charts-bar-vertical {
+  display: block;
+  height: 400px; /* Puedes ajustar este valor según lo alto que quieras */
+  width: 100%;
+}
+
+.names{
+  color: rgba(136, 136, 136, 0.292);
+  margin: 10px 0 0 0;
+  text-align: center;
+}

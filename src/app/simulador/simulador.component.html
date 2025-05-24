@@ -1,0 +1,228 @@
+  <nb-layout-header fixed class="sim-header">📠 Simulador de Cola de Impresión</nb-layout-header>
+
+  <nb-layout-column class="sim-column">
+    <!-- Panel de control -->
+    <nb-card class="sim-card sim-panel">
+      <nb-card-header class="sim-card-header">Parámetros de Simulación</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <form (ngSubmit)="ejecutarSimulacion()" class="sim-form">
+
+          <!-- Fila 1 -->
+          <div class="sim-flex-row">
+            <div class="sim-input-group">
+              <label for="num_personas">Cantidad de Personas</label>
+              <input nbInput fullWidth type="number" placeholder="Ej: 100" id="num_personas" [(ngModel)]="parametros.num_personas" name="num_personas">
+            </div>
+            <div class="sim-input-group">
+              <label for="tiempo_llegadas">Tiempo entre Llegadas (seg)</label>
+              <input nbInput fullWidth type="number" placeholder="Ej: 2" id="tiempo_llegadas" [(ngModel)]="parametros.tiempo_llegadas" name="tiempo_llegadas">
+            </div>
+            <div class="sim-input-group">
+              <label for="tiempo_simulacion">Duración Total de Simulación (seg)</label>
+              <input nbInput fullWidth type="number" placeholder="Ej: 1000" id="tiempo_simulacion" [(ngModel)]="parametros.tiempo_simulacion" name="tiempo_simulacion">
+            </div>
+          </div>
+
+          <!-- Fila 2 -->
+          <div class="sim-flex-row">
+            <div class="sim-input-group">
+              <label for="impresoras_bn">Cantidad de Impresoras B/N</label>
+              <input nbInput fullWidth type="number" placeholder="Ej: 3" id="impresoras_bn" [(ngModel)]="parametros.impresoras_bn" name="impresoras_bn">
+            </div>
+            <div class="sim-input-group">
+              <label for="impresoras_color">Cantidad de Impresoras Color</label>
+              <input nbInput fullWidth type="number" placeholder="Ej: 2" id="impresoras_color" [(ngModel)]="parametros.impresoras_color" name="impresoras_color">
+            </div>
+          </div>
+
+          <!-- Botón -->
+          <div class="sim-button-wrapper">
+            <button nbButton status="primary" type="submit" class="sim-button">▶ Ejecutar Simulación</button>
+          </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Gráficas lado a lado -->
+    <div class="row sim-chart-row">
+      <div class="col-chart">
+        <nb-card class="sim-card-1">
+          <nb-card-header class="sim-card-header">Uso de Impresoras</nb-card-header>
+          <nb-card-body class="sim-card-body">
+            <ngx-charts-bar-vertical
+              [results]="chartData"
+              [scheme]="colorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Tipo'"
+              [yAxisLabel]="'Segundos'"
+              [barPadding]="80">
+            </ngx-charts-bar-vertical>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col-chart">
+        <nb-card class="sim-card-1">
+          <nb-card-header class="sim-card-header">Promedio de Espera</nb-card-header>
+          <nb-card-body class="sim-card-body">
+            <ngx-charts-bar-vertical
+              [results]="chartData2"
+              [scheme]="colorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Tipo'"
+              [yAxisLabel]="'Segundos'"
+              [barPadding]="80">
+            </ngx-charts-bar-vertical>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="row sim-metric-row">
+      <div class="col-md-6">
+        <nb-card class="sim-card">
+          <nb-card-header class="sim-card-header">📊 Estadísticas</nb-card-header>
+          <nb-card-body class="sim-card-body">
+            <p>📄 Duracion Promedio B/N: <strong>{{ estadisticas.BN.promedioDuracion | number:'1.1-2' }}</strong> seg</p>
+            <p>🖨️ Duración Promedio Color: <strong>{{ estadisticas.Color.promedioDuracion | number:'1.1-2' }}</strong> seg</p>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col-md-6">
+        <nb-card class="sim-card">
+          <nb-card-header class="sim-card-header">⚙️ Rendimiento</nb-card-header>
+          <nb-card-body class="sim-card-body">
+            <p>B/N: <strong>{{ rendimiento.BN | number:'1.1-2' }}%</strong></p>
+            <p>Color: <strong>{{ rendimiento.Color | number:'1.1-2' }}%</strong></p>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- Cola de impresión -->
+    <nb-card class="sim-card">
+      <nb-card-header class="sim-card-header">📋 Cola de Impresión</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <div class="cola-grid">
+          <div *ngFor="let evento of colaVisualizada" class="evento-cola">
+            📌 {{ evento }}
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Tabla de registros -->
+    <nb-card class="sim-card">
+      <nb-card-header class="sim-card-header">🗂️ Registros de Trabajos de Impresión</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <table class="table table-hover sim-table">
+          <thead>
+            <tr>
+              <th>Empleado</th>
+              <th>Documento</th>
+              <th>Tipo Documento</th>
+              <th>Llegada</th>
+              <th>Inicio</th>
+              <th>Espera</th>
+              <th>Duración</th>
+              <th>Impresora</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of registros">
+              <td>{{ r.Empleado }}</td>
+              <td>{{ r.Documento }}</td>
+              <td>{{ r.TipoDocumento }}</td>
+              <td>{{ r.Llegada }}</td>
+              <td>{{ r.Inicio }}</td>
+              <td>
+                <nb-progress-bar [value]="(r.Espera / 10) * 100" status="danger" size="tiny"></nb-progress-bar>
+                <small>{{ r.Espera }} seg</small>
+              </td>
+              <td>
+                <nb-progress-bar [value]="(r.Duracion / 10) * 100" status="success" size="tiny"></nb-progress-bar>
+                <small>{{ r.Duracion }} seg</small>
+              </td>
+              <td>Impresora {{ r.Impresora_ID }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Conteo de impresiones por impresora -->
+    <nb-card class="sim-card">
+      <nb-card-header class="sim-card-header">🧾 Impresiones por Impresora</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <table class="table table-sm table-bordered sim-table">
+          <thead>
+            <tr>
+              <th>Impresora</th>
+              <th>Trabajos realizados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let impresora of (conteoImpresoras | keyvalue)">
+              <td>{{ impresora.key }}</td>
+              <td>{{ impresora.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+    </nb-card>
+
+<div class="row sim-metric-row">
+  <!-- Análisis de Impacto -->
+  <div class="col-md-6">
+    <nb-card class="sim-card">
+      <nb-card-header class="sim-card-header">📈 Análisis de Impacto</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <pre class="impacto-texto">{{ impacto }}</pre>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- Validación M/M/c -->
+  <div class="col-md-6">
+    <nb-card class="sim-card">
+      <nb-card-header class="sim-card-header">📊 Validación con Modelo M/M/c</nb-card-header>
+      <nb-card-body class="sim-card-body">
+        <div class="modelo-mm">
+          <strong>B/N:</strong><br>
+          Espera esperada: {{ validacionModelo.BN.teorico }} seg<br>
+          Espera simulada: {{ validacionModelo.BN.simulado }} seg<br>
+          Diferencia: {{ validacionModelo.BN.diferencia }} seg
+        </div>
+        <br>
+        <div class="modelo-mm">
+          <strong>Color:</strong><br>
+          Espera esperada: {{ validacionModelo.Color.teorico }} seg<br>
+          Espera simulada: {{ validacionModelo.Color.simulado }} seg<br>
+          Diferencia: {{ validacionModelo.Color.diferencia }} seg
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+
+
+  </nb-layout-column>
+<div>
+<nb-layout-footer fixed class="sim-footer">© 2025 Simulador de Cola de Impresión</nb-layout-footer>
+    <div class="names">ACC,KEDA,LAGS,JFMS,SIMR></div>
+</div>
+  
