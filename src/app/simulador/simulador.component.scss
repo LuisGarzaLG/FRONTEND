@@ -163,7 +163,7 @@ nb-layout-footer {
 .sim-button-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 10px;
 }
 
 /* GRAFICOS */
@@ -222,4 +222,14 @@ nb-layout-footer {
   color: rgba(136, 136, 136, 0.292);
   margin: 10px 0 0 0;
   text-align: center;
+}
+
+
+button[disabled] {
+  cursor: not-allowed !important;  /* Cambia el cursor y fuerza la regla */
+  color: #aaa !important;           /* Color gris tenue */
+  background-color: #e0e0e0 !important; /* Fondo gris claro */
+  border-color: #ccc !important;   /* Borde gris */
+  opacity: 0.7;                    /* Opcional: algo de transparencia */
+  pointer-events: none;            /* Evita eventos de mouse */
 }

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SimulacionService {
   private baseUrl = 'http://localhost:5000/api';
+  //private baseUrl = 'https://backend-6nsr.onrender.com/'
 
   constructor(private http: HttpClient) {}
 

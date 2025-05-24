@@ -1,8 +1,12 @@
   <nb-layout-header fixed class="sim-header">📠 Simulador de Cola de Impresión</nb-layout-header>
 
+
+
   <nb-layout-column class="sim-column">
     <!-- Panel de control -->
+     
     <nb-card class="sim-card sim-panel">
+      
       <nb-card-header class="sim-card-header">Parámetros de Simulación</nb-card-header>
       <nb-card-body class="sim-card-body">
         <form (ngSubmit)="ejecutarSimulacion()" class="sim-form">
@@ -39,6 +43,9 @@
           <div class="sim-button-wrapper">
             <button nbButton status="primary" type="submit" class="sim-button">▶ Ejecutar Simulación</button>
           </div>
+          <div class="sim-button-wrapper">
+            <button nbButton status="success"  class="sim-button" (click)="exportarExcel()" [disabled]="!simulacionEjecutada">📥 Exportar a Excel con Gráficas</button>
+          </div>
 
         </form>
       </nb-card-body>
@@ -51,6 +58,7 @@
           <nb-card-header class="sim-card-header">Uso de Impresoras</nb-card-header>
           <nb-card-body class="sim-card-body">
             <ngx-charts-bar-vertical
+            id="chart1"
               [results]="chartData"
               [scheme]="colorScheme"
               [xAxis]="true"
@@ -71,6 +79,7 @@
           <nb-card-header class="sim-card-header">Promedio de Espera</nb-card-header>
           <nb-card-body class="sim-card-body">
             <ngx-charts-bar-vertical
+            id="chart2"
               [results]="chartData2"
               [scheme]="colorScheme"
               [xAxis]="true"
@@ -223,6 +232,6 @@
   </nb-layout-column>
 <div>
 <nb-layout-footer fixed class="sim-footer">© 2025 Simulador de Cola de Impresión</nb-layout-footer>
-    <div class="names">ACC,KEDA,LAGS,JFMS,SIMR></div>
+    <div class="names">ACC,KEDA,LAGS,JFMS,SIMR</div>
 </div>
   
