@@ -102,7 +102,6 @@ ejecutarSimulacion() {
 }
 
 
-
   validarModelo() {
     const llegadasTotales = this.parametros.num_personas / this.parametros.tiempo_simulacion;
     const durBN = this.promedioDuracion('BN') || 0.0001;
