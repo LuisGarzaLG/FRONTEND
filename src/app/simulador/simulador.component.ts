@@ -103,38 +103,43 @@ ejecutarSimulacion() {
 
 
   validarModelo() {
-    const llegadasTotales = this.parametros.num_personas / this.parametros.tiempo_simulacion;
-    const durBN = this.promedioDuracion('BN') || 0.0001;
-    const durColor = this.promedioDuracion('COLOR') || 0.0001;
+  const llegadasTotales = this.parametros.num_personas / this.parametros.tiempo_simulacion;
+  const durBN = this.promedioDuracion('BN') || 0.0001;
+  const durColor = this.promedioDuracion('COLOR') || 0.0001;
 
-    const muBN = 1 / durBN;
-    const muColor = 1 / durColor;
+  const muBN = 1 / durBN;
+  const muColor = 1 / durColor;
 
-    console.log('Validando modelo...');
-    console.log('Llegadas totales (λ):', llegadasTotales);
-    console.log('Duración promedio BN:', durBN);
-    console.log('Duración promedio Color:', durColor);
-    console.log('Mu BN:', muBN, 'Mu Color:', muColor);
+  console.log('Validando modelo...');
+  console.log('Llegadas totales (λ):', llegadasTotales);
+  console.log('Duración promedio BN:', durBN);
+  console.log('Duración promedio Color:', durColor);
+  console.log('Mu BN:', muBN, 'Mu Color:', muColor);
 
-    const teoricoBN = this.calcularTeoricoMMC(llegadasTotales, muBN, this.parametros.impresoras_bn);
-    const teoricoColor = this.calcularTeoricoMMC(llegadasTotales, muColor, this.parametros.impresoras_color);
+  const teoricoBN = this.redondear(this.calcularTeoricoMMC(llegadasTotales, muBN, this.parametros.impresoras_bn));
+  const teoricoColor = this.redondear(this.calcularTeoricoMMC(llegadasTotales, muColor, this.parametros.impresoras_color));
 
-    const simBN = this.promedioEspera('BN');
-    const simColor = this.promedioEspera('COLOR');
+  const simBN = this.redondear(this.promedioEspera('BN'));
+  const simColor = this.redondear(this.promedioEspera('COLOR'));
 
-    this.validacionModelo = {
-      BN: {
-        teorico: teoricoBN,
-        simulado: simBN,
-        diferencia: Math.abs(simBN - teoricoBN)
-      },
-      Color: {
-        teorico: teoricoColor,
-        simulado: simColor,
-        diferencia: Math.abs(simColor - teoricoColor)
-      }
-    };
-  }
+  this.validacionModelo = {
+    BN: {
+      teorico: teoricoBN,
+      simulado: simBN,
+      diferencia: this.redondear(Math.abs(simBN - teoricoBN))
+    },
+    Color: {
+      teorico: teoricoColor,
+      simulado: simColor,
+      diferencia: this.redondear(Math.abs(simColor - teoricoColor))
+    }
+  };
+}
+
+private redondear(valor: number): number {
+  return Math.round(valor * 100) / 100;
+}
+
 
   calcularTeoricoMMC(lambda: number, mu: number, c: number): number {
     const rho = lambda / (c * mu);
