@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SimulacionService {
-  private baseUrl = 'http://localhost:5000/api';
-  //private baseUrl = 'https://backend-6nsr.onrender.com/'
+  //private baseUrl = 'http://localhost:5000/api';
+  private baseUrl = 'https://simulador-flask-zqqj.onrender.com'
 
   constructor(private http: HttpClient) {}
 
