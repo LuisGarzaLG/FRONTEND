@@ -1,13 +1,22 @@
 /* TITULOS DESTACADOS */
 .sim-header {
-  font-size: 42px;
-  font-weight: 800;
-  color: #0048ff;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  animation: fadeInDown 0.6s ease;
-  letter-spacing: 1px;
+    font-size: 50px;
+    font-weight: 800;
+    color: #0048ff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 0.6s ease;
+    letter-spacing: 1px;
 }
+
+/* Móviles: menos tamaño */
+@media (max-width: 600px) {
+  .sim-header {
+    font-size: 24px;
+  }
+}
+
+
 
 /* ANIMACIONES */
 @keyframes fadeIn {
@@ -178,7 +187,7 @@ nb-layout-footer {
   background: #f4faff;
   padding: 1rem;
   border-radius: 10px;
-  font-family: 'Courier New', monospace;
+  font-family: sans-serif;
   font-size: 0.96rem;
   line-height: 1.5;
   color: #002f5f;
